@@ -1,4 +1,4 @@
-set laststatus=2" Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
+set laststatus=2 " Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
 
 call plug#begin('~/.vim/plugged')
 
@@ -83,7 +83,7 @@ Plug 'scrooloose/syntastic'
 "PHP
 "Plug 'othree/html5.vim'
 Plug 'weierophinney/argumentrewrap'
-Plug 'vim-vdebug/vdebug'
+"Plug 'vim-vdebug/vdebug'
 Plug 'rking/ag.vim'
 Plug 'godlygeek/tabular'
 
@@ -105,15 +105,15 @@ Plug 'pangloss/vim-javascript'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "Plug 'valloric/youcompleteme'
-Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
+"Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
 Plug 'dense-analysis/ale'
 
 " go to line
 Plug 'bogado/file-line'
 
-Plug 'codota/tabnine-vim'
+"Plug 'codota/tabnine-vim'
 "Plug 'kevinhwang91/nvim-bqf'
 Plug 'romainl/vim-qf'
 

@@ -1,0 +1,89 @@
+[alias]
+  co = checkout
+  br = branch
+  lp = log -p
+  df = diff
+  lg = log --pretty=format:'%Cred%h%Creset -%Creset %s %Cgreen(%cr) %C(bold blue)%an%Creset'
+  ll = log --graph --decorate --pretty=oneline --abbrev-commit
+  # see `git help log` for detailed help.
+  #   %h: abbreviated commit hash
+  #   %d: ref names, like the --decorate option of git-log(1)
+  #   %cn: commiter name
+  #   %ce: committer email
+  #   %cr: committer date, relative
+  #   %ci: committer date, ISO 8601-like format
+  #   %an: author name
+  #   %ae: author email
+  #   %ar: author date, relative
+  #   %ai: author date, ISO 8601-like format
+  #   %s: subject
+  # my awesome git log replacement
+  lol = log --graph --pretty=format:'%C(red)%h%C(reset) %C(yellow)%d%C(reset)%s %C(green)%an %C(bold black)%cr%C(reset)' --abbrev-commit --date=relative
+  # same as above, but ISO date
+  lold = log --graph --pretty=format:\"%C(auto)%h%d%Creset %C(cyan)(%ci)%Creset %C(green)%cn <%ce>%Creset %s\"
+  # using build-in standards
+  lol2 = log --oneline --graph --decorate
+  # shows branches and their last commits
+  lol3 = log --all --graph --decorate --oneline --simplify-by-decoration
+  lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+  # ATTENTION: All aliases prefixed with ! run in /bin/sh make sure you use sh syntax, not bash/zsh or whatever
+  recentb = "!r() { refbranch=$1 count=$2; git for-each-ref --sort=-committerdate refs/heads --format='%(refname:short)|%(HEAD)%(color:yellow)%(refname:short)|%(color:bold green)%(committerdate:relative)|%(color:blue)%(subject)|%(color:magenta)%(authorname)%(color:reset)' --color=always --count=${count:-20} | while read line; do branch=$(echo \"$line\" | awk 'BEGIN { FS = \"|\" }; { print $1 }' | tr -d '*'); ahead=$(git rev-list --count \"${refbranch:-origin/master}..${branch}\"); behind=$(git rev-list --count \"${branch}..${refbranch:-origin/master}\"); colorline=$(echo \"$line\" | sed 's/^[^|]*|//'); echo \"$ahead|$behind|$colorline\" | awk -F'|' -vOFS='|' '{$5=substr($5,1,70)}1' ; done | ( echo \"ahead|behind||branch|lastcommit|message|author\\n\" && cat) | column -ts'|';}; r"
+  c = commit -m
+  a = add
+  dfc = diff --cached
+  pl = pull
+  ps = push
+  plre = pull --rebase
+  st = status
+  out = log origin..HEAD
+  qpl = log --pretty=\"%Cblue%h%Creset %Cgreen[%cr]%Creset %s\" origin/production..origin/master
+  graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+  ci = commit
+  ca = commit --amend
+  pr = remote prune origin
+  up = !git fetch origin && git rebase origin/master
+  rbc = rebase --continue
+  rbi = rebase -i
+  mm = !test `git rev-parse master` = $(git merge-base HEAD master) && git checkout master && git merge HEAD@{1} || echo "Non-fastforward"
+  sup = submodule update
+  compare = log --left-right --graph --cherry-pick --oneline
+[color]
+  ui = true
+  branch = auto
+  diff = auto
+  interactive = auto
+  status = auto
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+[core]
+  pager = less -r
+  editor = /opt/homebrew/bin/vim
+	excludesfile = /Users/joeyw/.gitignore_global
+[user]
+	name = alazycoder
+	email = alazycoder101@gmail.com
+[includeIf "gitdir:~/lazycoder/"]
+  path = ~/.gitconfig-lazycode
+[includeIf "gitdir:~/public_html/"]
+  path = ~/.gitconfig-company
+[init]
+  defaultBranch = main
+[commit]
+	template = ~/.gitmessage
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
